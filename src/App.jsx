@@ -39,7 +39,7 @@ function App() {
   }
 
   return (
-    <div className={`mx-auto mt-4 py-5 bg-gradient-to-r shadow-xl shadow-gray-400 ${formatBackground()}`}>
+    <div className={`mx-auto p-5 bg-gradient-to-r shadow-xl shadow-gray-400 ${formatBackground()}`}>
       <TopButtons setQuery={setQuery} />
       <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
 
@@ -47,8 +47,7 @@ function App() {
         <>
         <TimeAndLocation weather = {weather}/>
         <TemperatureAndDetails weather={weather}/>
-        <Forecast title='3 hour forecast' items={weather.hourly}/>
-        <Forecast title='daily forecast' items={weather.daily}/>
+        <Forecast title='3-hour forecast' items={weather.hourly}/>
         </>
       )}
 

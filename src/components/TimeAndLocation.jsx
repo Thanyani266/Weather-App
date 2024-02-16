@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 
 
 const TimeAndLocation = ({weather: {dt, timezone, name, country}}) => {
+  const regionNames = new Intl.DisplayNames(
+    ['en'], {type: 'region'}
+  );
+
   return (
     <div>
       <div className="flex items-center justify-center">
@@ -12,7 +16,7 @@ const TimeAndLocation = ({weather: {dt, timezone, name, country}}) => {
       </div>
       <div className="flex items-center justify-center my-3">
         <p className="text-white text-3xl font-medium">
-            {`${name}, ${country}`}
+            {`${name}, ${regionNames.of(`${country}`)}`}
         </p>
       </div>
     </div>

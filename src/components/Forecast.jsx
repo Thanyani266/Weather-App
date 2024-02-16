@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { iconUrlFromCode } from '../services/WeatherService';
+import moment from 'moment-timezone';
 
 const Forecast = ({title, items}) => {
   return (
@@ -12,7 +13,7 @@ const Forecast = ({title, items}) => {
         {items.map((item, index) => (
           <div key={index} className="flex flex-col items-center justify-center">
             <p className="font-light text-sm">
-              {item.title}
+              {moment(item.title).calendar()}
             </p>
             <img src={iconUrlFromCode(item.icon)} alt="sun" className="w-12 my-1"/>
             <p className="font-medium">{`${item.temp.toFixed()}°`}</p>

@@ -22,9 +22,9 @@ const formatCurrentWeather = (data) => {
         wind: {speed}
     } = data;
 
-    const {main: details, icon} = weather[0]
+    const {main: description, icon} = weather[0]
 
-    return {lat, lon, temp, feels_like, temp_min, temp_max, humidity, name, dt, country, sunrise, sunset, details, icon, speed}
+    return {lat, lon, temp, feels_like, temp_min, temp_max, humidity, name, dt, country, sunrise, sunset, description, icon, speed}
 }
 
 const formatFocastWeather = (data) => {

@@ -9,10 +9,9 @@ import {
 } from '@iconscout/react-unicons'
 import { formatToLocalTime, iconUrlFromCode } from '../services/WeatherService'
 import PropTypes from 'prop-types'
-import moment from 'moment-timezone'
 
 const TemperatureAndDetails = ({weather: {
-  details, 
+  description, 
   icon, 
   temp, 
   temp_min, 
@@ -27,12 +26,12 @@ const TemperatureAndDetails = ({weather: {
   return (
     <div>
       <div className="flex items-center justify-center py-6 text-xl text-cyan-300">
-        <p>{details}</p>
+        <p>{description}</p>
       </div>
-      <div className="flex flex-row items-center justify-between text-white py-3">
+      <div className="flex flex-row items-center justify-center text-white py-3">
         <img src={iconUrlFromCode(icon)} alt="sun" className="w-20"/>
       </div>
-      <div className="text-5xl">{`${temp.toFixed()}°`}</div>
+      <div className="text-5xl text-center">{`${temp.toFixed()}°`}</div>
       <div className="flex flex-col space-y-2">
         <div className="flex font-light text-sm items-center justify-center">
             <UilTemperature size={18} className='mr-1'/>
@@ -53,8 +52,8 @@ const TemperatureAndDetails = ({weather: {
       <div className='flex flex-row items-center justify-center space-x-2 text-white text-sm py-3'>
         <UilSun />
         <p className='font-light'>Rise: 
-          <span className='font-medium ml-1'>
-            {console.log(moment(Date.now(sunrise)).utcOffset(-60).format('Z'), formatToLocalTime(sunrise, timezone, 'hh:mm a'))
+          <span className='font-medium ml-1'> 05:47
+            {formatToLocalTime(sunrise, timezone, 'hh:mm a') 
             
             }
           </span>
@@ -62,8 +61,8 @@ const TemperatureAndDetails = ({weather: {
         <p className='font-light'>|</p>
         <UilSunset />
         <p className='font-light'>Set: 
-          <span className='font-medium ml-1'>
-          {formatToLocalTime(sunset, timezone, 'hh:mm a')}
+          <span className='font-medium ml-1'>18:37
+          {formatToLocalTime(sunset, timezone, 'hh:mm a') }
           </span>
         </p>
         <p className='font-light'>|</p>
