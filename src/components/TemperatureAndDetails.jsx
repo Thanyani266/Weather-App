@@ -7,8 +7,10 @@ import {
     UilSun,
     UilSunset 
 } from '@iconscout/react-unicons'
-import { formatToLocalTime, iconUrlFromCode } from '../services/WeatherService'
+import { iconUrlFromCode } from '../services/WeatherService'
 import PropTypes from 'prop-types'
+import { DateTime } from 'luxon'
+import { useEffect, useState } from 'react'
 
 const TemperatureAndDetails = ({weather: {
   description, 
@@ -23,6 +25,27 @@ const TemperatureAndDetails = ({weather: {
   feels_like,
   timezone
 }}) => {
+
+  const [offset, setOffset] = useState()
+
+  const offsettData = async () => {
+    const response = await fetch('https://thanyani266.github.io/time_zone-offset_data/timezone.json')
+    const responseData = await response.json()
+    console.log(responseData);
+    const displayData = responseData.find(item => item.offset === timezone)
+    setOffset(displayData.name)
+  }
+
+  useEffect(() => {
+    offsettData();
+  }, )
+
+  const kak = () => {
+    const dateObject = DateTime.fromSeconds(sunrise).setZone(`${offset}`).toFormat("hh:mm a")
+
+    console.log('dat:' + dateObject)
+  }
+
   return (
     <div>
       <div className="flex items-center justify-center py-6 text-xl text-cyan-300">
@@ -52,17 +75,19 @@ const TemperatureAndDetails = ({weather: {
       <div className='flex flex-row items-center justify-center space-x-2 text-white text-sm py-3'>
         <UilSun />
         <p className='font-light'>Rise: 
-          <span className='font-medium ml-1'> 05:47
-            {formatToLocalTime(sunrise, timezone, 'hh:mm a') 
-            
+          <span className='font-medium ml-1'>{kak()}
+            {
+              DateTime.fromSeconds(sunrise).setZone(`${offset}`).toFormat("hh:mm a")
             }
           </span>
         </p>
         <p className='font-light'>|</p>
         <UilSunset />
         <p className='font-light'>Set: 
-          <span className='font-medium ml-1'>18:37
-          {formatToLocalTime(sunset, timezone, 'hh:mm a') }
+          <span className='font-medium ml-1'>
+          {
+            DateTime.fromSeconds(sunset).setZone(`${offset}`).toFormat("hh:mm a")
+          }
           </span>
         </p>
         <p className='font-light'>|</p>

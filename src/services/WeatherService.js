@@ -17,6 +17,7 @@ const formatCurrentWeather = (data) => {
         main: {temp, feels_like, temp_min, temp_max, humidity},
         name,
         dt,
+        timezone,
         sys: {country, sunrise, sunset},
         weather,
         wind: {speed}
@@ -24,11 +25,11 @@ const formatCurrentWeather = (data) => {
 
     const {main: description, icon} = weather[0]
 
-    return {lat, lon, temp, feels_like, temp_min, temp_max, humidity, name, dt, country, sunrise, sunset, description, icon, speed}
+    return {lat, lon, temp, feels_like, temp_min, temp_max, humidity, name, dt, timezone, country, sunrise, sunset, description, icon, speed}
 }
 
 const formatFocastWeather = (data) => {
-    let {list, timezone} = data;
+    let {list} = data;
     const daily = list?.slice(1,6).map(d => {
         return {
             title: d.dt_txt,
@@ -45,7 +46,7 @@ const formatFocastWeather = (data) => {
         }
     })
 
-    return { timezone, daily, hourly }
+    return { daily, hourly }
 }
 
 const getFormattedWeatherData = async (searchParams) => {
@@ -55,7 +56,7 @@ const getFormattedWeatherData = async (searchParams) => {
     const {lat, lon} = formattedCurrentWeather
 
     const formattedFocastWeather = await getWeatherData('forecast', {
-        lat, lon, exclude: 'current, minutely, alerts', units: searchParams.units
+        lat, lon, units: searchParams.units
     }).then(formatFocastWeather)
 
     return {...formattedCurrentWeather, ...formattedFocastWeather}
@@ -64,7 +65,7 @@ const getFormattedWeatherData = async (searchParams) => {
 const formatToLocalTime = (
     secs, 
     zone, 
-    format ) => {
+    format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a") => {
         DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
 }
 

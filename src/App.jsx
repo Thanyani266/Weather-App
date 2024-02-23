@@ -10,7 +10,7 @@ import getFormattedWeatherData from './services/WeatherService'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+const App = () => {
   const [query, setQuery] = useState({q: 'berlin'})
   const [units, setUnits] = useState('metric')
   const [weather, setWeather] = useState(null)
@@ -23,6 +23,7 @@ function App() {
       await getFormattedWeatherData({...query, units})
       .then(data => {
         toast.success(`Successfully fetched weather for ${data.name}, ${data.country}`)
+        //const zone = data.find(item => item.timezone === "")
         setWeather(data)
       })
     }
@@ -47,7 +48,7 @@ function App() {
         <>
         <TimeAndLocation weather = {weather}/>
         <TemperatureAndDetails weather={weather}/>
-        <Forecast title='3-hour forecast' items={weather.hourly}/>
+        <Forecast title='3-hour forecast' items={weather.hourly} weather={weather}/>
         </>
       )}
 
